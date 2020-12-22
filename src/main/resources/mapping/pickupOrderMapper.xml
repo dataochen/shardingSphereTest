@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cdt.mapper.PickupOrderMapper">
+    <resultMap id="BaseResultMap" type="org.cdt.DO.PickupOrder">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="merchant_id" jdbcType="VARCHAR" property="merchantId"/>
+        <result column="merchant_name" jdbcType="VARCHAR" property="merchantName"/>
+        <result column="shop_id" jdbcType="VARCHAR" property="shopId"/>
+        <result column="shop_name" jdbcType="VARCHAR" property="shopName"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="payment_expiry_time" jdbcType="TIMESTAMP" property="paymentExpiryTime"/>
+        <result column="cashier_url" jdbcType="VARCHAR" property="cashierUrl"/>
+        <result column="payment_status" jdbcType="VARCHAR" property="paymentStatus"/>
+        <result column="payment_no" jdbcType="VARCHAR" property="paymentNo"/>
+        <result column="payment_finished_time" jdbcType="TIMESTAMP" property="paymentFinishedTime"/>
+        <result column="refund_no" jdbcType="VARCHAR" property="refundNo"/>
+        <result column="refund_started_time" jdbcType="TIMESTAMP" property="refundStartedTime"/>
+        <result column="refund_finished_time" jdbcType="TIMESTAMP" property="refundFinishedTime"/>
+        <result column="refund_operator" jdbcType="VARCHAR" property="refundOperator"/>
+        <result column="coupon_refund_status" jdbcType="VARCHAR" property="couponRefundStatus"/>
+        <result column="order_status" jdbcType="VARCHAR" property="orderStatus"/>
+        <result column="order_expiry_time" jdbcType="TIMESTAMP" property="orderExpiryTime"/>
+        <result column="cancel_type" jdbcType="VARCHAR" property="cancelType"/>
+        <result column="cancel_remark" jdbcType="VARCHAR" property="cancelRemark"/>
+        <result column="refund_type" jdbcType="VARCHAR" property="refundType"/>
+        <result column="refund_remark" jdbcType="VARCHAR" property="refundRemark"/>
+        <result column="refund_error_msg" jdbcType="VARCHAR" property="refundErrorMsg"/>
+        <result column="refund_error_code" jdbcType="VARCHAR" property="refundErrorCode"/>
+        <result column="merchant_operate_time" jdbcType="TIMESTAMP" property="merchantOperateTime"/>
+        <result column="operator" jdbcType="VARCHAR" property="operator"/>
+        <result column="operation_type" jdbcType="VARCHAR" property="operationType"/>
+        <result column="pickup_name" jdbcType="VARCHAR" property="pickupName"/>
+        <result column="pickup_time" jdbcType="TIMESTAMP" property="pickupTime"/>
+        <result column="pickup_phone" jdbcType="VARCHAR" property="pickupPhone"/>
+        <result column="pickup_code" jdbcType="VARCHAR" property="pickupCode"/>
+        <result column="country_code" jdbcType="VARCHAR" property="countryCode"/>
+        <result column="order_amount" jdbcType="DECIMAL" property="orderAmount"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+        <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount"/>
+        <result column="payment_amount" jdbcType="DECIMAL" property="paymentAmount"/>
+        <result column="order_additional_info" jdbcType="VARCHAR" property="orderAdditionalInfo"/>
+        <result column="merchant_notify_status" jdbcType="VARCHAR" property="merchantNotifyStatus"/>
+        <result column="user_notify_status" jdbcType="VARCHAR" property="userNotifyStatus"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, order_id, merchant_id, merchant_name, shop_id, shop_name, user_id, payment_expiry_time,
+    cashier_url, payment_status, payment_no, payment_finished_time, refund_no, refund_started_time,
+    refund_finished_time, refund_operator, coupon_refund_status, order_status, order_expiry_time,
+    cancel_type, cancel_remark, refund_type, refund_remark, refund_error_msg, refund_error_code,
+    merchant_operate_time, operator, operation_type, pickup_name, pickup_time, pickup_phone,
+    pickup_code, country_code, order_amount, currency, discount_amount, payment_amount,
+    order_additional_info, merchant_notify_status, user_notify_status, created_time,
+    modified_time
+  </sql>
+    <select id="selectByExample" parameterType="org.cdt.DO.PickupOrderExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from pickup_order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pickup_order
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pickup_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="org.cdt.DO.PickupOrder">
+    insert into pickup_order (id, order_id, merchant_id,
+    merchant_name, shop_id, shop_name,
+    user_id, payment_expiry_time, cashier_url,
+    payment_status, payment_no, payment_finished_time,
+    refund_no, refund_started_time, refund_finished_time,
+    refund_operator, coupon_refund_status, order_status,
+    order_expiry_time, cancel_type, cancel_remark,
+    refund_type, refund_remark, refund_error_msg,
+    refund_error_code, merchant_operate_time,
+    operator, operation_type, pickup_name,
+    pickup_time, pickup_phone, pickup_code,
+    country_code, order_amount, currency,
+    discount_amount, payment_amount, order_additional_info,
+    merchant_notify_status, user_notify_status,
+    created_time, modified_time)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{merchantId,jdbcType=VARCHAR},
+    #{merchantName,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR},
+    #{userId,jdbcType=VARCHAR}, #{paymentExpiryTime,jdbcType=TIMESTAMP}, #{cashierUrl,jdbcType=VARCHAR},
+    #{paymentStatus,jdbcType=VARCHAR}, #{paymentNo,jdbcType=VARCHAR}, #{paymentFinishedTime,jdbcType=TIMESTAMP},
+    #{refundNo,jdbcType=VARCHAR}, #{refundStartedTime,jdbcType=TIMESTAMP}, #{refundFinishedTime,jdbcType=TIMESTAMP},
+    #{refundOperator,jdbcType=VARCHAR}, #{couponRefundStatus,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR},
+    #{orderExpiryTime,jdbcType=TIMESTAMP}, #{cancelType,jdbcType=VARCHAR}, #{cancelRemark,jdbcType=VARCHAR},
+    #{refundType,jdbcType=VARCHAR}, #{refundRemark,jdbcType=VARCHAR}, #{refundErrorMsg,jdbcType=VARCHAR},
+    #{refundErrorCode,jdbcType=VARCHAR}, #{merchantOperateTime,jdbcType=TIMESTAMP},
+    #{operator,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR}, #{pickupName,jdbcType=VARCHAR},
+    #{pickupTime,jdbcType=TIMESTAMP}, #{pickupPhone,jdbcType=VARCHAR}, #{pickupCode,jdbcType=VARCHAR},
+    #{countryCode,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL}, #{currency,jdbcType=VARCHAR},
+    #{discountAmount,jdbcType=DECIMAL}, #{paymentAmount,jdbcType=DECIMAL}, #{orderAdditionalInfo,jdbcType=VARCHAR},
+    #{merchantNotifyStatus,jdbcType=VARCHAR}, #{userNotifyStatus,jdbcType=VARCHAR},
+    #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="org.cdt.DO.PickupOrder">
+        insert into pickup_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="merchantId != null">
+                merchant_id,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="shopName != null">
+                shop_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="paymentExpiryTime != null">
+                payment_expiry_time,
+            </if>
+            <if test="cashierUrl != null">
+                cashier_url,
+            </if>
+            <if test="paymentStatus != null">
+                payment_status,
+            </if>
+            <if test="paymentNo != null">
+                payment_no,
+            </if>
+            <if test="paymentFinishedTime != null">
+                payment_finished_time,
+            </if>
+            <if test="refundNo != null">
+                refund_no,
+            </if>
+            <if test="refundStartedTime != null">
+                refund_started_time,
+            </if>
+            <if test="refundFinishedTime != null">
+                refund_finished_time,
+            </if>
+            <if test="refundOperator != null">
+                refund_operator,
+            </if>
+            <if test="couponRefundStatus != null">
+                coupon_refund_status,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="orderExpiryTime != null">
+                order_expiry_time,
+            </if>
+            <if test="cancelType != null">
+                cancel_type,
+            </if>
+            <if test="cancelRemark != null">
+                cancel_remark,
+            </if>
+            <if test="refundType != null">
+                refund_type,
+            </if>
+            <if test="refundRemark != null">
+                refund_remark,
+            </if>
+            <if test="refundErrorMsg != null">
+                refund_error_msg,
+            </if>
+            <if test="refundErrorCode != null">
+                refund_error_code,
+            </if>
+            <if test="merchantOperateTime != null">
+                merchant_operate_time,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operationType != null">
+                operation_type,
+            </if>
+            <if test="pickupName != null">
+                pickup_name,
+            </if>
+            <if test="pickupTime != null">
+                pickup_time,
+            </if>
+            <if test="pickupPhone != null">
+                pickup_phone,
+            </if>
+            <if test="pickupCode != null">
+                pickup_code,
+            </if>
+            <if test="countryCode != null">
+                country_code,
+            </if>
+            <if test="orderAmount != null">
+                order_amount,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="discountAmount != null">
+                discount_amount,
+            </if>
+            <if test="paymentAmount != null">
+                payment_amount,
+            </if>
+            <if test="orderAdditionalInfo != null">
+                order_additional_info,
+            </if>
+            <if test="merchantNotifyStatus != null">
+                merchant_notify_status,
+            </if>
+            <if test="userNotifyStatus != null">
+                user_notify_status,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantId != null">
+                #{merchantId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null">
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentExpiryTime != null">
+                #{paymentExpiryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cashierUrl != null">
+                #{cashierUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentStatus != null">
+                #{paymentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentNo != null">
+                #{paymentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentFinishedTime != null">
+                #{paymentFinishedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundNo != null">
+                #{refundNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundStartedTime != null">
+                #{refundStartedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundFinishedTime != null">
+                #{refundFinishedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundOperator != null">
+                #{refundOperator,jdbcType=VARCHAR},
+            </if>
+            <if test="couponRefundStatus != null">
+                #{couponRefundStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderExpiryTime != null">
+                #{orderExpiryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cancelType != null">
+                #{cancelType,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelRemark != null">
+                #{cancelRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null">
+                #{refundType,jdbcType=VARCHAR},
+            </if>
+            <if test="refundRemark != null">
+                #{refundRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundErrorMsg != null">
+                #{refundErrorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="refundErrorCode != null">
+                #{refundErrorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantOperateTime != null">
+                #{merchantOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operationType != null">
+                #{operationType,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupName != null">
+                #{pickupName,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupTime != null">
+                #{pickupTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickupPhone != null">
+                #{pickupPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupCode != null">
+                #{pickupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="countryCode != null">
+                #{countryCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAmount != null">
+                #{orderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="discountAmount != null">
+                #{discountAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentAmount != null">
+                #{paymentAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderAdditionalInfo != null">
+                #{orderAdditionalInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantNotifyStatus != null">
+                #{merchantNotifyStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userNotifyStatus != null">
+                #{userNotifyStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatchSelective" parameterType="java.util.List">
+        insert into pickup_order
+        (order_id,merchant_id,created_time)values
+        <foreach collection="list" item="pickupOrder" index="index" separator=",">
+
+            <trim prefix=" (" suffix=")" suffixOverrides=",">
+
+                <if test="pickupOrder.orderId != null">
+                    #{pickupOrder.orderId,jdbcType=VARCHAR},
+                </if>
+                <if test="pickupOrder.orderId == null">
+                    NULL ,
+                </if>
+                <if test="pickupOrder.merchantId != null">
+                    #{pickupOrder.merchantId,jdbcType=VARCHAR},
+                </if>
+                <if test="pickupOrder.merchantId == null">
+                    NULL ,
+                </if>
+                <if test="pickupOrder.createdTime != null">
+                    #{pickupOrder.createdTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="pickupOrder.createdTime == null">
+                    NULL ,
+                </if>
+
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.cdt.DO.PickupOrder">
+        update pickup_order
+        <set>
+            <if test="pickupOrder.orderId != null">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantId != null">
+                merchant_id = #{merchantId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null">
+                shop_name = #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentExpiryTime != null">
+                payment_expiry_time = #{paymentExpiryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cashierUrl != null">
+                cashier_url = #{cashierUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentStatus != null">
+                payment_status = #{paymentStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentNo != null">
+                payment_no = #{paymentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentFinishedTime != null">
+                payment_finished_time = #{paymentFinishedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundNo != null">
+                refund_no = #{refundNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundStartedTime != null">
+                refund_started_time = #{refundStartedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundFinishedTime != null">
+                refund_finished_time = #{refundFinishedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundOperator != null">
+                refund_operator = #{refundOperator,jdbcType=VARCHAR},
+            </if>
+            <if test="couponRefundStatus != null">
+                coupon_refund_status = #{couponRefundStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderExpiryTime != null">
+                order_expiry_time = #{orderExpiryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cancelType != null">
+                cancel_type = #{cancelType,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelRemark != null">
+                cancel_remark = #{cancelRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundType != null">
+                refund_type = #{refundType,jdbcType=VARCHAR},
+            </if>
+            <if test="refundRemark != null">
+                refund_remark = #{refundRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="refundErrorMsg != null">
+                refund_error_msg = #{refundErrorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="refundErrorCode != null">
+                refund_error_code = #{refundErrorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantOperateTime != null">
+                merchant_operate_time = #{merchantOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operationType != null">
+                operation_type = #{operationType,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupName != null">
+                pickup_name = #{pickupName,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupTime != null">
+                pickup_time = #{pickupTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickupPhone != null">
+                pickup_phone = #{pickupPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="pickupCode != null">
+                pickup_code = #{pickupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="countryCode != null">
+                country_code = #{countryCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAmount != null">
+                order_amount = #{orderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="discountAmount != null">
+                discount_amount = #{discountAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentAmount != null">
+                payment_amount = #{paymentAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderAdditionalInfo != null">
+                order_additional_info = #{orderAdditionalInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantNotifyStatus != null">
+                merchant_notify_status = #{merchantNotifyStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userNotifyStatus != null">
+                user_notify_status = #{userNotifyStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.cdt.DO.PickupOrder">
+    update pickup_order
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      payment_expiry_time = #{paymentExpiryTime,jdbcType=TIMESTAMP},
+      cashier_url = #{cashierUrl,jdbcType=VARCHAR},
+      payment_status = #{paymentStatus,jdbcType=VARCHAR},
+      payment_no = #{paymentNo,jdbcType=VARCHAR},
+      payment_finished_time = #{paymentFinishedTime,jdbcType=TIMESTAMP},
+      refund_no = #{refundNo,jdbcType=VARCHAR},
+      refund_started_time = #{refundStartedTime,jdbcType=TIMESTAMP},
+      refund_finished_time = #{refundFinishedTime,jdbcType=TIMESTAMP},
+      refund_operator = #{refundOperator,jdbcType=VARCHAR},
+      coupon_refund_status = #{couponRefundStatus,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      order_expiry_time = #{orderExpiryTime,jdbcType=TIMESTAMP},
+      cancel_type = #{cancelType,jdbcType=VARCHAR},
+      cancel_remark = #{cancelRemark,jdbcType=VARCHAR},
+      refund_type = #{refundType,jdbcType=VARCHAR},
+      refund_remark = #{refundRemark,jdbcType=VARCHAR},
+      refund_error_msg = #{refundErrorMsg,jdbcType=VARCHAR},
+      refund_error_code = #{refundErrorCode,jdbcType=VARCHAR},
+      merchant_operate_time = #{merchantOperateTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      pickup_name = #{pickupName,jdbcType=VARCHAR},
+      pickup_time = #{pickupTime,jdbcType=TIMESTAMP},
+      pickup_phone = #{pickupPhone,jdbcType=VARCHAR},
+      pickup_code = #{pickupCode,jdbcType=VARCHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      currency = #{currency,jdbcType=VARCHAR},
+      discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      payment_amount = #{paymentAmount,jdbcType=DECIMAL},
+      order_additional_info = #{orderAdditionalInfo,jdbcType=VARCHAR},
+      merchant_notify_status = #{merchantNotifyStatus,jdbcType=VARCHAR},
+      user_notify_status = #{userNotifyStatus,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryJoin" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT t1.order_id,t2.sku_id
+    from pickup_order t1,order_spu t2
+    where t1.order_id=t2.order_id and t1.order_id=#{orderId,jdbcType=VARCHAR} and t2.order_id=#{orderId,jdbcType=VARCHAR}
+
+  </select>
+</mapper>
